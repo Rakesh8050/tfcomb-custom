@@ -1,6 +1,6 @@
 # 🧬 TF-COMB Custom Version
 
-This repository contains a **customized version of the [TF-COMB](https://github.com/SchulzLab/TF-COMB)** (Transcription Factor Co-Occurrence Mining and Benchmarking) package.
+This repository contains a **customized version of the [TF-COMB](https://rakesh8050.github.io/tfcomb-custom/)** (Transcription Factor Co-Occurrence Mining and Benchmarking) package.
 
 TF-COMB is a Python-based framework used to study **co-occurrence of transcription factors (TFs)** across genomic regions, such as ChIP-seq peaks or motif-based TF binding sites (TFBS). It applies *market basket analysis* to detect statistically significant TF–TF combinations.
 
@@ -26,4 +26,4 @@ TF-COMB is a Python-based framework used to study **co-occurrence of transcripti
 
 You can install this version directly from GitHub:
 ```bash
-!pip install git+https://github.com/YOUR_USERNAME/tfcomb-custom.git
+!pip install https://github.com/Rakesh8050/tfcomb-custom.git
