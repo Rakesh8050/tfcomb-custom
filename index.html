@@ -11,7 +11,7 @@
       color: #222;
       margin: 0;
       padding: 0;
-      line-height: 1.6;
+      line-height: 1.7;
     }
     header {
       background: #2c3e50;
@@ -22,29 +22,48 @@
     header h1 {
       margin: 0;
       font-size: 2rem;
+      letter-spacing: 0.5px;
+    }
+    header p {
+      font-size: 1rem;
+      margin-top: 0.5rem;
+      color: #dcdcdc;
     }
     main {
       padding: 2rem 10%;
+      max-width: 1200px;
+      margin: auto;
     }
     h2 {
       border-left: 5px solid #3498db;
       padding-left: 10px;
       color: #2c3e50;
+      margin-top: 2rem;
+    }
+    p {
+      margin-bottom: 1rem;
+      text-align: justify;
     }
     code {
       background: #f5f5f5;
-      padding: 6px 10px;
-      border-radius: 6px;
+      padding: 2px 6px;
+      border-radius: 3px;
       font-family: monospace;
+      color: #333;
     }
     pre {
       background: #f5f5f5;
       padding: 10px;
       overflow-x: auto;
       border-radius: 6px;
+      font-family: monospace;
     }
     ul {
       margin-left: 20px;
+      padding-left: 10px;
+    }
+    li {
+      margin-bottom: 6px;
     }
     a {
       color: #0073e6;
@@ -67,14 +86,11 @@
     }
     footer {
       text-align: center;
-      padding: 1rem;
+      padding: 1.5rem;
       font-size: 0.9rem;
-      color: #888;
+      color: #777;
       background: #f9f9f9;
       border-top: 1px solid #eee;
-    }
-    .github-star {
-      margin-top: 10px;
     }
   </style>
 </head>
@@ -85,84 +101,93 @@
   <h1>TF-COMB: Custom Patch, Error Explanation & Permanent Fix</h1>
   <p>Resolve pandas melt errors and deploy a reproducible version for future analyses</p>
   <a class="button" href="https://github.com/Rakesh8050/tfcomb-custom.git" target="_blank">View on GitHub</a>
-  <div class="github-star">
-    <iframe src="https://ghbtns.com/github-btn.html?user=Rakesh8050&repo=tfcomb-custom&type=star&count=true&size=large"
-      frameborder="0" scrolling="0" width="160" height="30" title="GitHub"></iframe>
-  </div>
 </header>
 
 <main>
 
-  <h2>📦 Repository Overview</h2>
+  <h2>1. Overview</h2>
   <p>
-    This custom version of <strong>TF-COMB</strong> is hosted at:
-    <br>
-    👉 <a href="https://github.com/Rakesh8050/tfcomb-custom.git" target="_blank">
-      https://github.com/Rakesh8050/tfcomb-custom.git
-    </a>
+    This documentation describes a custom version of <strong>TF-COMB</strong> designed to fix 
+    compatibility issues with recent versions of the <code>pandas</code> library.  
+    The patched version, hosted at 
+    <a href="https://github.com/Rakesh8050/tfcomb-custom.git" target="_blank">https://github.com/Rakesh8050/tfcomb-custom.git</a>,
+    ensures stable performance during transcription factor (TF) co-occurrence analysis and 
+    prevents runtime errors caused by outdated syntax in the original implementation.
   </p>
 
+  <h2>2. The Original Problem</h2>
   <p>
-    This repository provides a fixed version of TF-COMB that resolves the 
-    <strong><code>ValueError: var_name=['TF2'] must be a scalar</code></strong> 
-    issue encountered during transcription factor co-occurrence analysis.  
-    Users can install this version directly without any compatibility issues 
-    with modern <code>pandas</code> versions.
-  </p>
-
-  <h2>🔍 What Was the Error?</h2>
-  <p>
-    When running <code>market_basket()</code> in TF-COMB, users encountered:
+    Users of the original TF-COMB repository (<a href="https://github.com/loosolab/TF-COMB.git" target="_blank">loosolab/TF-COMB</a>)
+    encountered the following error during execution of the <code>market_basket()</code> function:
   </p>
   <pre><code>ValueError: var_name=['TF2'] must be a scalar.</code></pre>
-
   <p>
-    This occurred because newer versions of <code>pandas</code> changed how 
-    <code>pd.melt()</code> accepts parameters. In older versions, 
-    lists for <code>id_vars</code> and <code>var_name</code> worked fine.  
-    Now, they must be single string (scalar) values.  
-    TF-COMB’s original code used lists, causing incompatibility.
+    This error occurs because modern <code>pandas</code> versions no longer allow lists to be used 
+    as parameters in <code>pd.melt()</code>. In the original TF-COMB implementation, both 
+    <code>id_vars</code> and <code>var_name</code> were passed as lists:
+  </p>
+  <pre><code>pd.melt(pair_counts_table, id_vars=["TF1"], var_name=["TF2"], value_name="TF1_TF2_count")</code></pre>
+  <p>
+    As of <code>pandas ≥ 2.2</code>, these parameters must be single string (scalar) values.  
+    The outdated syntax resulted in the ValueError above whenever the code attempted to 
+    reshape data during the co-occurrence computation process.
   </p>
 
-  <h2>🧩 What Was Fixed</h2>
+  <h2>3. Root Cause and Resolution Summary</h2>
   <p>
-    The <code>objects.py</code> file inside TF-COMB was updated to replace 
-    list-based arguments with string-based ones in the <code>pd.melt()</code> call.  
-    This ensures compatibility with <code>pandas ≥ 2.2</code> and prevents 
-    the <code>ValueError</code> crash.
+    The issue originated in the <code>objects.py</code> module within TF-COMB, specifically in the section 
+    responsible for data transformation during rule extraction.  
+    The resolution involved modifying the <code>pd.melt()</code> function call to align with 
+    the updated <code>pandas</code> API, replacing list arguments with scalar strings.  
+    This change restores full compatibility with current Python environments and ensures 
+    that TF-COMB executes without interruption on any system.
   </p>
 
-  <h2>📁 File Location of the Change</h2>
+  <h2>4. File Location of the Modified Code</h2>
+  <p>
+    The modification was applied within the <code>objects.py</code> file located in the TF-COMB package directory.
+    Depending on your environment, the file can be found in one of the following paths:
+  </p>
   <ul>
-    <li><strong>Mac / Anaconda:</strong> <code>/Applications/anaconda3/lib/python3.12/site-packages/tfcomb/objects.py</code></li>
+    <li><strong>macOS / Anaconda:</strong> <code>/Applications/anaconda3/lib/python3.12/site-packages/tfcomb/objects.py</code></li>
     <li><strong>Google Colab:</strong> <code>/usr/local/lib/python3.10/dist-packages/tfcomb/objects.py</code></li>
   </ul>
+  <p>You can verify the exact location of your installation using:</p>
   <pre><code>import tfcomb, os
 print(os.path.dirname(tfcomb.__file__))</code></pre>
 
-  <h2>✅ Why This Fix Matters</h2>
+  <h2>5. Importance of the Fix</h2>
   <p>
-    This patch makes TF-COMB compatible with modern <code>pandas</code> versions.  
-    You no longer need to manually downgrade or edit any files — just install 
-    the patched repository and use it in your workflow.
+    This fix ensures that TF-COMB remains compatible with evolving <code>pandas</code> and 
+    <code>Python</code> environments. It eliminates dependency conflicts, prevents workflow 
+    interruptions, and maintains reproducibility in motif co-occurrence analysis pipelines.
+    The modification is permanent and requires no manual edits to system files in the future.
   </p>
 
-  <h2>⚙️ Installation</h2>
+  <h2>6. Installation of the Patched Version</h2>
+  <p>
+    The custom repository can be installed directly using the following commands:
+  </p>
   <pre><code>!pip uninstall -y tfcomb
 !pip install git+https://github.com/Rakesh8050/tfcomb-custom.git</code></pre>
 
-  <h2>💡 Conclusion</h2>
   <p>
-    The GitHub-hosted version ensures long-term reproducibility, stability, and 
-    easy access for all users performing TF binding site and co-occurrence analyses.  
-    This patch permanently resolves the <code>var_name</code> error 
-    and aligns TF-COMB with evolving Python and pandas APIs.
+    Once installed, all TF-COMB functionalities, including <code>market_basket()</code>, 
+    will run seamlessly without triggering compatibility-related errors.
+  </p>
+
+  <h2>7. Conclusion</h2>
+  <p>
+    The <a href="https://github.com/Rakesh8050/tfcomb-custom.git" target="_blank">tfcomb-custom</a> 
+    repository provides a reliable and updated version of TF-COMB tailored for modern environments.  
+    It guarantees stability, reproducibility, and full compatibility with newer versions of 
+    Python and pandas, eliminating the need for manual intervention or version downgrades.
   </p>
 
 </main>
 
 <footer>
-  <p>© 2025 TF-COMB Custom Fix by Rakesh Kumar | Built for stable motif & TF-TF co-occurrence analysis</p>
+  <p>© 2025 TF-COMB Custom Fix by Rakesh Kumar | Designed for robust and reproducible TF co-occurrence analysis</p>
   <p><a href="https://github.com/Rakesh8050/tfcomb-custom.git" target="_blank">https://github.com/Rakesh8050/tfcomb-custom.git</a></p>
 </footer>
 
