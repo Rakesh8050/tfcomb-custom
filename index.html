@@ -51,6 +51,18 @@
       background: #f9f9f9;
       border-top: 1px solid #eee;
     }
+    a.button {
+      display: inline-block;
+      background: #3498db;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+      margin-top: 10px;
+    }
+    a.button:hover {
+      background: #2c80c4;
+    }
   </style>
 </head>
 <body>
@@ -58,6 +70,7 @@
 <header>
   <h1>TF-COMB: Custom Patch, Error Explanation & Permanent Fix</h1>
   <p>Resolve pandas melt errors and deploy a reproducible version for future analyses</p>
+  <a class="button" href="https://github.com/Rakesh8050/tfcomb-custom.git" target="_blank">View on GitHub</a>
 </header>
 
 <main>
@@ -115,7 +128,9 @@ C.market_basket(threads=2)
 
   <h2>7️⃣ Make It Permanent (GitHub Method)</h2>
   <ol>
-    <li>Create a GitHub repo (e.g., <strong>tfcomb-custom</strong>).</li>
+    <li>Create a GitHub repo (<strong>already done</strong>): 
+      <a href="https://github.com/Rakesh8050/tfcomb-custom.git" target="_blank">tfcomb-custom</a>
+    </li>
     <li>Add your edited <code>tfcomb/</code> folder and <code>setup.py</code>:</li>
   </ol>
   <pre><code>from setuptools import setup, find_packages
@@ -133,19 +148,19 @@ setup(
 git add .
 git commit -m "Fixed pandas melt issue in TF-COMB"
 git branch -M main
-git remote add origin https://github.com/YOUR_USERNAME/tfcomb-custom.git
+git remote add origin https://github.com/Rakesh8050/tfcomb-custom.git
 git push -u origin main</code></pre>
 
-  <h2>8️⃣ Use Your Patched TF-COMB Anywhere</h2>
+  <h2>8️⃣ Use the Patched TF-COMB Anywhere</h2>
   <pre><code>!pip uninstall -y tfcomb
-!pip install git+https://github.com/YOUR_USERNAME/tfcomb-custom.git</code></pre>
+!pip install git+https://github.com/Rakesh8050/tfcomb-custom.git</code></pre>
 
   <h2>9️⃣ Quick Setup Cell for Google Colab</h2>
   <pre><code>from google.colab import drive
 drive.mount('/content/drive')
 
 !pip uninstall -y tfcomb
-!pip install git+https://github.com/YOUR_USERNAME/tfcomb-custom.git
+!pip install git+https://github.com/Rakesh8050/tfcomb-custom.git
 
 import tfcomb, os
 print("TF-COMB path:", os.path.dirname(tfcomb.__file__))</code></pre>
@@ -160,14 +175,17 @@ print("TF-COMB path:", os.path.dirname(tfcomb.__file__))</code></pre>
   <h2>✅ Conclusion</h2>
   <p>
     This patch permanently fixes TF-COMB’s compatibility with new pandas releases.  
-    Deploying it through GitHub makes it reproducible and prevents you from re-editing 
+    Deploying it through GitHub makes it reproducible and prevents re-editing 
     the site-packages folder each time you use Colab or reinstall TF-COMB.
   </p>
+
+  <a class="button" href="https://github.com/Rakesh8050/tfcomb-custom.git" target="_blank">Open tfcomb-custom Repository</a>
 
 </main>
 
 <footer>
   <p>© 2025 TF-COMB Custom Fix by Rakesh Kumar | Built for stable motif & TF-TF co-occurrence analysis</p>
+  <p><a href="https://github.com/Rakesh8050/tfcomb-custom.git" target="_blank">https://github.com/Rakesh8050/tfcomb-custom.git</a></p>
 </footer>
 
 </body>
